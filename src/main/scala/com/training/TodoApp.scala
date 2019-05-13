@@ -17,9 +17,7 @@ case class IntervalItem(id: Long, paidTime: Long, dontStopPayingTime: Long, dont
   type Props = Unit
   case class State(items: Seq[IntervalItem], description: String, paidTime: Long, seconds: Long)
 
-  def tick(): Unit = setState(prevState => prevState.copy(seconds = prevState.seconds + 1))
-
-  private var interval = -100
+  private var interval = -1
 
   override def componentDidMount(): Unit = {
     interval = setInterval(() => tick(), 1000)
@@ -29,7 +27,16 @@ case class IntervalItem(id: Long, paidTime: Long, dontStopPayingTime: Long, dont
     clearInterval(interval)
   }
 
-  override def initialState = State(Seq.empty, "", 0, 0)
+  def tick(): Unit = {
+    if (state.seconds == 0) {
+      clearInterval(interval)
+      interval = setInterval(() => tick(), 1000)
+    } else {
+      setState(prevState => prevState.copy(seconds = prevState.seconds - 1))
+    }
+  }
+
+  override def initialState = State(Seq.empty, "", 0, 30)
 
   def handleChange(e: SyntheticEvent[html.Input, Event]): Unit = {
     val eventValue = e.target.value
@@ -61,7 +68,7 @@ case class IntervalItem(id: Long, paidTime: Long, dontStopPayingTime: Long, dont
           items = prevState.items :+ newItem,
           description = "",
           paidTime = 0,
-          seconds = 0
+          seconds = 30
         )
       })
     }

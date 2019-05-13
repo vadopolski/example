@@ -5,7 +5,6 @@ style-min.css
 pom.xml.versionsBackup
 *.~sql
 *.iml
-.project
 .classpath
 .springBeans
 .settings/

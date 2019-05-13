@@ -18,7 +18,17 @@ npmDevDependencies in Compile += "webpack-merge" -> "4.2.1"
 libraryDependencies += "me.shadaj" %%% "slinky-web" % "0.6.0"
 libraryDependencies += "me.shadaj" %%% "slinky-hot" % "0.6.0"
 
+libraryDependencies ++= List(
+  "com.softwaremill.sttp" %% "akka-http-backend" % "1.5.15",
+  "com.softwaremill.sttp" %% "json4s" % "1.5.15",
+  "org.json4s" %% "json4s-native" % "3.6.0"
+)
+
+libraryDependencies ++= List("com.softwaremill.sttp" %% "core" % "1.5.16")
+
 libraryDependencies += "org.scalatest" %%% "scalatest" % "3.0.5" % Test
+
+libraryDependencies +=  "org.scalaj" %% "scalaj-http" % "2.4.1"
 
 scalacOptions += "-P:scalajs:sjsDefinedByDefault"
 addCompilerPlugin("org.scalamacros" % "paradise" % "2.1.1" cross CrossVersion.full)
